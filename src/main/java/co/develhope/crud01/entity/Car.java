@@ -1,5 +1,6 @@
 package co.develhope.crud01.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Car {
 
     @Id
@@ -21,5 +22,6 @@ public class Car {
     private String modelName;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private String type;
 }

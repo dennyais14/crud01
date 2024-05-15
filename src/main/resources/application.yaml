@@ -8,3 +8,6 @@ spring:
     show_sql: true
     hibernate:
       ddl-auto: create-drop
+  jackson:
+    serialization:
+      fall-on-empty-beans: false
