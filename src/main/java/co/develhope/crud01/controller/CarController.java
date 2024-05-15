@@ -1,6 +1,7 @@
 package co.develhope.crud01.controller;
 
 import co.develhope.crud01.entity.Car;
+import co.develhope.crud01.entity.CarType;
 import co.develhope.crud01.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,16 +53,22 @@ public class CarController {
     // se id non è presente in db (usa existsById()),
     // restituisce Car vuota
     @PutMapping("/update/{id}")
-    public ResponseEntity<Car> updateCarType(@PathVariable Long id, @RequestBody String type) { //aggiorna tipo auto con id
+    public ResponseEntity<Car> updateCarType(@PathVariable Long id, @RequestBody CarType type) { //aggiorna tipo auto con id
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isPresent()) {
             Car car = optionalCar.get();
-            car.setType(type);
+            car.setType(type.toString());
             carRepository.saveAndFlush(car);
             return new ResponseEntity<>(car, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    //visualizza le macchine per tipo
+    @GetMapping("/cars/type")
+    public List<Car> getCarsByType(@RequestParam CarType type) {
+        return carRepository.findByType(type);
     }
 
     //cancella la Car specifica -
